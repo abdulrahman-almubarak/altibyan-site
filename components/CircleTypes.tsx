@@ -53,7 +53,7 @@ const CircleTypes: React.FC = () => {
           {CIRCLE_TYPES.map((type) => (
             <div 
               key={type.id} 
-              className="group bg-gray-50 dark:bg-gray-900/50 p-8 rounded-3xl border border-gray-100 dark:border-gray-700 hover:border-secondary/30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col"
+              className="relative group bg-gray-50 dark:bg-gray-900/50 p-8 rounded-3xl border border-gray-100 dark:border-gray-700 hover:border-secondary/30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col overflow-hidden"
             >
               <div className="flex justify-between items-start mb-6">
                 <div className="p-4 bg-white dark:bg-gray-800 rounded-2xl text-primary dark:text-secondary shadow-sm group-hover:bg-primary group-hover:text-white transition-all duration-300">
@@ -86,86 +86,84 @@ const CircleTypes: React.FC = () => {
               </button>
 
               <div className="mt-4 h-1 w-0 bg-secondary group-hover:w-full transition-all duration-500 rounded-full"></div>
+
+              {/* In-Card Overlay Details */}
+              <div 
+                className={`absolute inset-0 z-50 bg-white dark:bg-gray-900 flex flex-col transition-transform duration-300 ease-in-out ${
+                  selectedType?.id === type.id ? 'translate-y-0' : 'translate-y-full'
+                }`}
+              >
+                {selectedType?.id === type.id && (
+                  <>
+                    <div className="sticky top-0 z-10 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between shadow-sm">
+                      <h3 className="font-bold text-primary dark:text-secondary truncate pr-4">
+                        {t.circleTypes.types[type.id as keyof typeof t.circleTypes.types]}
+                      </h3>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedType(null);
+                        }}
+                        className="p-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300 transition-colors shrink-0"
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+
+                    <div className="overflow-y-auto flex-1 p-6">
+                      <div className="flex flex-col gap-6">
+                        {/* Benefits Section */}
+                        <div>
+                          <div className="flex items-center gap-2 mb-4 text-primary dark:text-secondary font-bold text-sm">
+                            <CheckCircle2 size={16} />
+                            <h4>{t.common.benefits}</h4>
+                          </div>
+                          <ul className="space-y-2">
+                            {(t.circleTypes.benefits[type.id as keyof typeof t.circleTypes.benefits] as string[]).map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></div>
+                                <span className="leading-relaxed">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Curriculum Section */}
+                        <div>
+                          <div className="flex items-center gap-2 mb-4 text-primary dark:text-secondary font-bold text-sm">
+                            <BookOpen size={16} />
+                            <h4>{t.common.curriculum}</h4>
+                          </div>
+                          <ul className="space-y-2">
+                            {(t.circleTypes.curriculum[type.id as keyof typeof t.circleTypes.curriculum] as string[]).map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0"></div>
+                                <span className="leading-relaxed">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="mt-8 pb-2">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedType(null);
+                          }}
+                          className="w-full py-3.5 bg-gray-100 dark:bg-gray-800 rounded-xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm"
+                        >
+                          {t.common.close}
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Details Modal */}
-      {selectedType && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm transition-all">
-          <div className="absolute inset-0" onClick={() => setSelectedType(null)}></div>
-          
-          <div className="relative bg-white dark:bg-gray-900 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
-            {/* Modal Header */}
-            <div className="relative h-28 md:h-32 bg-primary flex items-center justify-center shrink-0">
-              <button 
-                onClick={() => setSelectedType(null)}
-                className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-              >
-                <X size={24} />
-              </button>
-              <div className="p-4 bg-white dark:bg-gray-800 rounded-2xl text-primary dark:text-secondary shadow-xl">
-                 {getIcon(selectedType.iconName, 40)}
-              </div>
-            </div>
-
-            <div className="p-8 overflow-y-auto">
-              {/* Site Name inside Read More */}
-              <div className="text-center mb-1">
-                  <span className="text-xs font-bold text-secondary uppercase tracking-wider">{t.common.siteName}</span>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-                {t.circleTypes.types[selectedType.id as keyof typeof t.circleTypes.types]}
-              </h3>
-              <p className="text-gray-500 dark:text-gray-400 text-center mb-8">
-                {t.circleTypes.desc[selectedType.id as keyof typeof t.circleTypes.desc]}
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Benefits Section */}
-                <div>
-                  <div className="flex items-center gap-2 mb-4 text-primary dark:text-secondary font-bold">
-                    <CheckCircle2 size={20} />
-                    <h4>{t.common.benefits}</h4>
-                  </div>
-                  <ul className="space-y-3">
-                    {(t.circleTypes.benefits[selectedType.id as keyof typeof t.circleTypes.benefits] as string[]).map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
-                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></div>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Curriculum Section */}
-                <div>
-                  <div className="flex items-center gap-2 mb-4 text-primary dark:text-secondary font-bold">
-                    <BookOpen size={20} />
-                    <h4>{t.common.curriculum}</h4>
-                  </div>
-                  <ul className="space-y-3">
-                    {(t.circleTypes.curriculum[selectedType.id as keyof typeof t.circleTypes.curriculum] as string[]).map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
-                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-primary shrink-0"></div>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <button 
-                onClick={() => setSelectedType(null)}
-                className="mt-10 w-full py-4 bg-gray-100 dark:bg-gray-800 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              >
-                {t.common.close}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

@@ -48,7 +48,9 @@ export const translations: Record<Language, Translation> = {
       viewMap: 'عرض الموقع على الخريطة',
       benefits: 'الفوائد والمميزات',
       curriculum: 'ماذا يتعلمون (المنهج)',
-      details: 'التفاصيل الكاملة'
+      details: 'التفاصيل الكاملة',
+      featuredSections: 'أبرز الأقسام',
+      chooseSection: 'اختر القسم الذي تود زيارته'
     },
     circleTypes: {
       title: 'أنواع الحلقات القرآنية',
@@ -125,15 +127,43 @@ export const translations: Record<Language, Translation> = {
     stats: {
       title: 'إحصائيات المجمع',
       subtitle: 'أرقام تعكس مسيرة العطاء والإنجاز في خدمة كتاب الله الكريم',
-      students: 'طالباً',
-      teachers: 'معلماً',
-      certified: 'معلماً مجازاً',
-      admins: 'إدارياً',
-      khatmeen: 'خاتماً',
-      circles: 'حلقة قرآنية',
-      mosques: 'مسجد',
-      noor: 'طفلاً في نور البيان',
-      maqari: 'مقارئ'
+      affiliatedMosques: 'المساجد التابعة',
+      workingStaff: 'الكوادر العاملين',
+      beneficiaryCategories: 'الفئات المستفيدة',
+      circlesStats: 'الحلقات',
+      programBeneficiaries: 'المستفيدين من الدورات والبرامج',
+      fruitsAndAchievements: 'الثمار والإنجازات لعام 1447',
+      mosques: 'المساجد',
+      supervisors: 'المشرفين',
+      admins: 'الاداريين',
+      reciters: 'المقرئين',
+      certifiedTeachers: 'المعلمين المجازين',
+      totalStudents: 'مجموع الطلاب',
+      adults: 'الكبار',
+      qiraat: 'قراءات',
+      universityStudents: 'الجامعيين',
+      elementary: 'الابتدائي',
+      intermediate: 'المتوسط',
+      highschool: 'الثانوي',
+      quranCircles: 'الحلقات العامة',
+      tilawaCorrection: 'تصحيح التلاوة',
+      revision: 'المراجعة',
+      maqari: 'المقارئ',
+      fatihaCorrection: 'تصحيح الفاتحة',
+      fatihaExpats: 'تصحيح الفاتحة (للجاليات)',
+      noorAlbayanCircles: 'نور البيان',
+      tajweed: 'التجويد',
+      tilawa: 'التلاوة',
+      dabt: 'مصطلحات الضبط',
+      khatmati: 'برنامج ختمتي',
+      noorAlbayan: 'نور البيان',
+      summerCourse: 'الدورة الصيفية',
+      ramadanCourse: 'الدورة الرمضانية',
+      khatmeen: 'الخاتمين',
+      certified: 'المجازين',
+      memorizedPages: 'الاوجه المحفوظة',
+      reviewedPages: 'اوجه المراجعة',
+      recitedPages: 'اوجه التلاوة'
     },
     about: {
       title: 'عن المجمع',
@@ -178,14 +208,13 @@ export const translations: Record<Language, Translation> = {
       tag: 'تجارة لن تبور',
       title: 'فرص المساهمة',
       subtitle: 'ساهم معنا في خدمة كتاب الله، وكن شريكاً في الأجر من خلال باقات التبرع المتنوعة',
-      teacher: 'كفالة معلم',
-      teacherDesc: 'المعلم هو الركيزة الأساسية في تعليم كتاب الله. ساهم في كفالة رواتب المعلمين لنضمن استمرار الحلقات.',
-      student: 'كفالة طالب',
-      studentDesc: 'ساهم في تكاليف تعليم طالب في حلقات التحفيظ، وكن شريكاً له في كل حرف يتلوه ويحفظه.',
-      circle: 'كفالة حلقة',
-      circleDesc: 'اكفل حلقة قرآنية كاملة (معلم وطلاب) وشارك في تخريج كوكبة من الحفاظ سنوياً.',
-      general: 'دعم عام للمجمع',
-      generalDesc: 'مساهمة مفتوحة لدعم أنشطة المجمع ومصاريفه التشغيلية وتطوير البيئة التعليمية.',
+      packages: [
+        { title: 'كفالة طالب لمدة أسبوع', price: '40 ريال', icon: 'student' },
+        { title: 'كفالة طالب لمدة شهر', price: '150 ريال', icon: 'student' },
+        { title: 'كفالة معلم نصف شهر', price: '500 ريال', icon: 'teacher' },
+        { title: 'كفالة معلم لمدة شهر', price: '1000 ريال', icon: 'teacher' },
+        { title: 'كفالة حلقة', desc: '(معلم مع حوافز الطلاب المتميزين)', price: '1500 ريال', icon: 'circle' }
+      ],
       donateBtn: 'تبرع الآن',
       storeTitle: 'هل ترغب بالمساهمة بمبلغ آخر؟',
       storeSubtitle: 'يمكنك زيارة المتجر الإلكتروني واختيار أوجه الخير التي تناسبك',
@@ -235,12 +264,26 @@ export const translations: Record<Language, Translation> = {
       { id: 4, name: "جامع الميمان", mapLink: "https://maps.app.goo.gl/zyZ58aeV828Qdfbw8", availableCircles: ['elementary', 'intermediate', 'highschool'] },
       { id: 5, name: "جامع الشيخ عبدالله بن راشد بن كليب", mapLink: "https://maps.app.goo.gl/FEDiKmtZYD7G8cUH9", availableCircles: ['elementary', 'intermediate'] },
       { id: 6, name: "جامع عبدالمحسن المحيسن", mapLink: "https://maps.app.goo.gl/4nfgYPzBQg8YPh8VA", availableCircles: ['maqari'] },
-      { id: 7, name: "جامع عقبة بن نافع", mapLink: "https://maps.app.goo.gl/r7Wkgrqh6MGQyEiR7", availableCircles: ['maqari'] },
+      { id: 7, name: "مسجد عقبة بن نافع", mapLink: "https://maps.app.goo.gl/r7Wkgrqh6MGQyEiR7", availableCircles: ['maqari'] },
       { id: 8, name: "جامع الشيخ عبد الرحمن بن عبدالله آل الشيخ", mapLink: "https://maps.app.goo.gl/xBW1cgguaBKgFaXP9", availableCircles: ['maqari'] },
-      { id: 9, name: "جامع أبو عبيدة بن الجراح", mapLink: "https://maps.app.goo.gl/PmVzeR45QMZBehyT6", availableCircles: ['adults'] },
-      { id: 10, name: "جامع سعيد بن زيد", mapLink: "https://maps.app.goo.gl/tw2E9swcKpyFgjPe8", availableCircles: ['adults'] },
+      { id: 9, name: "مسجد أبو عبيدة بن الجراح", mapLink: "https://maps.app.goo.gl/PmVzeR45QMZBehyT6", availableCircles: ['adults'] },
+      { id: 10, name: "مسجد سعيد بن زيد", mapLink: "https://maps.app.goo.gl/tw2E9swcKpyFgjPe8", availableCircles: ['adults'] },
     ],
     adsList: [
+      {
+        id: 7,
+        title: "التسجيل في دورات المجمع",
+        description: "التسجيل متاح الآن في دورات مجمع التبيان.",
+        date: "٥ ربيع الأول ١٤٤٨هـ",
+        image: "https://i.postimg.cc/7hLSsRDH/IMG-20260818-WA0102(1).jpg",
+        link: "https://docs.google.com/forms/d/1k9hEO1o-_NuRGmxUP7Yl5CcERDZK72t7cUhb6EoXNXI/viewform?edit_requested=true&pli=1",
+        buttons: [{ text: "سجل معنا الآن", link: "https://docs.google.com/forms/d/1k9hEO1o-_NuRGmxUP7Yl5CcERDZK72t7cUhb6EoXNXI/viewform?edit_requested=true&pli=1" }],
+        details: {
+          sections: [
+            { title: "التفاصيل", items: ["مسارات متنوعة تناسب الجميع", "خطة حفظ ومراجعة متقنة", "نخبة من المعلمين المتميزين", "جوائز وتحفيز مستمر"] }
+          ]
+        }
+      },
       {
         id: 0,
         title: "دورة التبيان الرمضانية السابعة (1447هـ)",
@@ -264,7 +307,13 @@ export const translations: Record<Language, Translation> = {
         description: "نعلن عن فتح باب القبول والتسجيل في جميع حلقات المجمع لمختلف الأعمار.",
         date: "٢٩ رجب 1447",
         image: "https://i.postimg.cc/zBNzwPfZ/IMG_20260211_WA0019.jpg",
-        link: "https://docs.google.com/forms/d/1k9hEO1o-_NuRGmxUP7Yl5CcERDZK72t7cUhb6EoXNXI/viewform?edit_requested=true&pli=1"
+        link: "https://docs.google.com/forms/d/1k9hEO1o-_NuRGmxUP7Yl5CcERDZK72t7cUhb6EoXNXI/viewform?edit_requested=true&pli=1",
+        details: {
+          sections: [
+            { title: "الشروط", items: ["اجتياز المقابلة.", "المواظبة على الحضور.", "الالتزام بالمنهج الفصلي وإنجازه."] },
+            { title: "المميزات", items: ["معلمين مجازين.", "منهج حفظ يناسب جميع المستويات.", "استقبال جميع المراحل الدراسية.", "جوائز تحفيزية أسبوعية وفصلية."] }
+          ]
+        }
       },
       {
         id: 2,
@@ -339,6 +388,35 @@ export const translations: Record<Language, Translation> = {
             { title: "أبرز الإنجازات", items: ["ختمات قرآنية", "تميز في الأداء", "تفاعل مجتمعي كبير"] }
           ]
         }
+      },
+      {
+        id: 5,
+        title: "انطلاق دورة التبيان الصيفية ٦",
+        description: "يسر الجمعية الخيرية لتحفيظ القرآن الكريم بالرياض (مكنون) بالتعاون مع مجمع التبيان المركزي دعوتكم للمشاركة في دورة التبيان الصيفية السادسة.",
+        date: "١ محرم ١٤٤٨هـ",
+        image: "https://i.postimg.cc/xT6kXKRL/IMG-20260704-WA0002.jpg",
+        link: "https://docs.google.com/forms/d/e/1FAIpQLSeG60nj6gTgzsaIMUBoPAPB6lkt7MAgOip6scr-7PShFVnPgw/viewform",
+        details: {
+          sections: [
+            { title: "التاريخ", items: ["تبدأ الدورة بمشيئة الله يوم الأحد ١ محرم ١٤٤٨هـ"] },
+            { title: "فروع الدورة", items: ["جزء", "٣ أجزاء", "٥ أجزاء", "١٠ أجزاء", "١٥ جزء", "٢٠ جزء", "٢٥ جزء", "القرآن كامل"] },
+            { title: "مميزات الدورة", items: ["مقرؤون معتمدون في مكنون", "معلمون مجازون", "شهادات للمنجزين", "جوائز للمتميزين"] },
+            { title: "البرامج المصاحبة", items: ["دورة تجويد", "غريب القرآن"] },
+            { title: "فترات الدورة", items: ["بعد صلاتي الفجر والعصر مباشرة", "المغرب والعشاء"] }
+          ]
+        }
+      },
+      {
+        id: 6,
+        title: "ختمة أصغر خاتم في التبيان واحتفاء الجمعية",
+        description: "احتفت الجمعية الخيرية لتحفيظ القرآن الكريم بالرياض بأصغر خاتم لكتاب الله في مجمع التبيان المركزي في أجواء قرآنية بهيجة.",
+        date: "٩ محرم ١٤٤٨هـ",
+        image: "https://i.postimg.cc/m2zf4LN0/IMG-20260705-WA0024.jpg",
+        details: {
+          sections: [
+            { title: "تفاصيل الخبر", items: ["تكريم أصغر خاتم", "حضور وتشريف مسؤولي الجمعية والمجمع", "توزيع الجوائز والهدايا التذكارية"] }
+          ]
+        }
       }
     ],
     recitationsList: [
@@ -376,7 +454,9 @@ export const translations: Record<Language, Translation> = {
       viewMap: 'View Map',
       benefits: 'Benefits & Features',
       curriculum: 'What they learn',
-      details: 'Full Details'
+      details: 'Full Details',
+      featuredSections: 'Featured Sections',
+      chooseSection: 'Choose a section to visit'
     },
     circleTypes: {
       title: 'Quranic Circle Types',
@@ -453,15 +533,43 @@ export const translations: Record<Language, Translation> = {
     stats: {
       title: 'Our Statistics',
       subtitle: 'Numbers reflecting our journey of serving the Holy Quran',
-      students: 'Students',
-      teachers: 'Teachers',
-      certified: 'Certified Teachers',
-      admins: 'Admins',
-      khatmeen: 'Huffaz (Graduates)',
-      circles: 'Circles',
+      affiliatedMosques: 'Affiliated Mosques',
+      workingStaff: 'Working Staff',
+      beneficiaryCategories: 'Beneficiary Categories',
+      circlesStats: 'Quranic Circles',
+      programBeneficiaries: 'Program Beneficiaries',
+      fruitsAndAchievements: 'Fruits and Achievements for 1447',
       mosques: 'Mosques',
-      noor: 'Noor Al-Bayan Kids',
-      maqari: 'Maqari Centers'
+      supervisors: 'Supervisors',
+      admins: 'Administrators',
+      reciters: 'Reciters',
+      certifiedTeachers: 'Certified Teachers',
+      totalStudents: 'Total Students',
+      adults: 'Adults',
+      qiraat: 'Qiraat',
+      universityStudents: 'University Students',
+      elementary: 'Elementary',
+      intermediate: 'Intermediate',
+      highschool: 'High School',
+      quranCircles: 'General Circles',
+      tilawaCorrection: 'Tilawa Correction',
+      revision: 'Revision',
+      maqari: 'Maqari Centers',
+      fatihaCorrection: 'Fatiha Correction',
+      fatihaExpats: 'Fatiha Correction (Expats)',
+      noorAlbayanCircles: 'Noor Al-Bayan',
+      tajweed: 'Tajweed',
+      tilawa: 'Recitation',
+      dabt: 'Dabt (Marking Rules)',
+      khatmati: 'Khatmati Program',
+      noorAlbayan: 'Noor Al-Bayan',
+      summerCourse: 'Summer Course',
+      ramadanCourse: 'Ramadan Course',
+      khatmeen: 'Graduates (Khatmeen)',
+      certified: 'Certified (Ijazah)',
+      memorizedPages: 'Memorized Pages',
+      reviewedPages: 'Reviewed Pages',
+      recitedPages: 'Recited Pages'
     },
     about: {
       title: 'About the Complex',
@@ -506,14 +614,13 @@ export const translations: Record<Language, Translation> = {
       tag: 'A Trade That Never Fails',
       title: 'Donation Opportunities',
       subtitle: 'Help us serve Allah\'s Book and share the reward through our diverse donation packages',
-      teacher: 'Sponsor a Teacher',
-      teacherDesc: 'The teacher is the pillar of education. Contribute to teachers\' salaries to ensure continuity.',
-      student: 'Sponsor a Student',
-      studentDesc: 'Support a student\'s journey and be a partner in every letter they recite.',
-      circle: 'Sponsor a Circle',
-      circleDesc: 'Sponsor a full Quranic circle and help graduate a constellation of huffaz annually.',
-      general: 'General Support',
-      generalDesc: 'Open contribution to support general activities and operational expenses.',
+      packages: [
+        { title: 'Sponsor a Student for a Week', price: '40 SAR', icon: 'student' },
+        { title: 'Sponsor a Student for a Month', price: '150 SAR', icon: 'student' },
+        { title: 'Sponsor a Teacher for Half a Month', price: '500 SAR', icon: 'teacher' },
+        { title: 'Sponsor a Teacher for a Month', price: '1000 SAR', icon: 'teacher' },
+        { title: 'Sponsor a Circle', desc: '(Teacher with incentives for distinguished students)', price: '1500 SAR', icon: 'circle' }
+      ],
       donateBtn: 'Donate Now',
       storeTitle: 'Wish to contribute another amount?',
       storeSubtitle: 'Visit our online store to choose the charitable avenues that suit you',
@@ -570,6 +677,20 @@ export const translations: Record<Language, Translation> = {
     ],
     adsList: [
       {
+        id: 7,
+        title: "Registration for Complex Courses",
+        description: "Registration is now open for Al-Tibyan Complex courses.",
+        date: "5 Rabi' al-Awwal 1448",
+        image: "https://i.postimg.cc/7hLSsRDH/IMG-20260818-WA0102(1).jpg",
+        link: "https://docs.google.com/forms/d/1k9hEO1o-_NuRGmxUP7Yl5CcERDZK72t7cUhb6EoXNXI/viewform?edit_requested=true&pli=1",
+        buttons: [{ text: "Register Now", link: "https://docs.google.com/forms/d/1k9hEO1o-_NuRGmxUP7Yl5CcERDZK72t7cUhb6EoXNXI/viewform?edit_requested=true&pli=1" }],
+        details: {
+          sections: [
+            { title: "Details", items: ["Various tracks suitable for everyone", "Mastered memorization and review plan", "Elite distinguished teachers", "Prizes and continuous motivation"] }
+          ]
+        }
+      },
+      {
         id: 0,
         title: "7th Ramadan Tibyan Course (1447 AH)",
         description: "Registration is open for the 7th Ramadan Tibyan Course (Permit: 7641). Various branches and distinguished prizes.",
@@ -592,7 +713,13 @@ export const translations: Record<Language, Translation> = {
         description: "We are now accepting applications for all complex circles across all age groups.",
         date: "29 Rajab 1447",
         image: "https://i.postimg.cc/zBNzwPfZ/IMG_20260211_WA0019.jpg",
-        link: "https://docs.google.com/forms/d/1k9hEO1o-_NuRGmxUP7Yl5CcERDZK72t7cUhb6EoXNXI/viewform?edit_requested=true&pli=1"
+        link: "https://docs.google.com/forms/d/1k9hEO1o-_NuRGmxUP7Yl5CcERDZK72t7cUhb6EoXNXI/viewform?edit_requested=true&pli=1",
+        details: {
+          sections: [
+            { title: "Conditions", items: ["Pass the interview.", "Regular attendance.", "Commitment to and completion of the semester curriculum."] },
+            { title: "Features", items: ["Licensed teachers.", "Memorization curriculum suitable for all levels.", "Accepting all age groups.", "Weekly and semesterly motivational prizes."] }
+          ]
+        }
       },
       {
         id: 2,
@@ -665,6 +792,35 @@ export const translations: Record<Language, Translation> = {
           sections: [
             { title: "Course Statistics", items: ["Number of participating students", "Number of active circles", "Memorization achievement rate", "Implemented accompanying programs"] },
             { title: "Key Achievements", items: ["Quranic completions", "Excellence in performance", "Great community interaction"] }
+          ]
+        }
+      },
+      {
+        id: 5,
+        title: "Launch of Al-Tibyan Summer Course 6",
+        description: "The Charitable Society for Quran Memorization in Riyadh (Maknoon), in cooperation with Al-Tibyan Central Complex, invites you to participate in the 6th Al-Tibyan Summer Course.",
+        date: "1 Muharram 1448",
+        image: "https://i.postimg.cc/xT6kXKRL/IMG-20260704-WA0002.jpg",
+        link: "https://docs.google.com/forms/d/e/1FAIpQLSeG60nj6gTgzsaIMUBoPAPB6lkt7MAgOip6scr-7PShFVnPgw/viewform",
+        details: {
+          sections: [
+            { title: "Date", items: ["The course starts on Sunday, 1 Muharram 1448 AH"] },
+            { title: "Course Branches", items: ["1 Juz", "3 Juz", "5 Juz", "10 Juz", "15 Juz", "20 Juz", "25 Juz", "Full Quran"] },
+            { title: "Course Features", items: ["Certified reciters from Maknoon", "Licensed teachers", "Certificates for achievers", "Prizes for outstanding students"] },
+            { title: "Accompanying Programs", items: ["Tajweed Course", "Ghareeb Al-Quran (Uncommon words in Quran)"] },
+            { title: "Course Periods", items: ["Immediately after Fajr and Asr prayers", "Maghrib and Isha"] }
+          ]
+        }
+      },
+      {
+        id: 6,
+        title: "Completion of the Youngest Memorizer and Society Celebration",
+        description: "The Charitable Society for Quran Memorization in Riyadh celebrated the youngest memorizer of the Book of Allah in the Al-Tibyan Central Complex in a joyful Quranic atmosphere.",
+        date: "9 Muharram 1448",
+        image: "https://i.postimg.cc/m2zf4LN0/IMG-20260705-WA0024.jpg",
+        details: {
+          sections: [
+            { title: "News Details", items: ["Honoring the youngest memorizer", "Attendance of society and complex officials", "Distribution of prizes and souvenirs"] }
           ]
         }
       }

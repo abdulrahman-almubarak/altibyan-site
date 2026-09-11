@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
   const { t, dir } = useThemeLanguage();
 
   return (
-    <div id="hero" className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden pt-32 md:pt-40">
+    <div id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 md:pt-40">
       <div 
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{ 
@@ -57,6 +57,17 @@ const Hero: React.FC = () => {
                 <Heart className="group-hover:text-red-500 transition-colors" size={20} />
                 <span>{t.hero.donate}</span>
             </a>
+        </div>
+
+        <div className="mt-16 w-full max-w-3xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20 animate-in slide-in-from-bottom-24 duration-1000 bg-black flex items-center justify-center">
+          <video 
+            src="https://www.image2url.com/r2/default/videos/1783079301075-12224ade-8fb3-4e3e-a889-23a6d940f41b.mp4#t=0.001" 
+            controls 
+            preload="metadata"
+            className="w-full h-full object-contain"
+          >
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
 

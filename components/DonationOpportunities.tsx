@@ -6,41 +6,32 @@ import { useThemeLanguage } from '../context/ThemeLanguageContext';
 const DonationOpportunities: React.FC = () => {
   const { t, dir } = useThemeLanguage();
 
-  const opportunities = [
-    {
-      id: 1,
-      title: t.donation.teacher,
-      description: t.donation.teacherDesc,
-      icon: <UserCheck size={32} />,
-      color: "bg-secondary/10 text-secondary dark:bg-secondary/20",
-      buttonColor: "bg-secondary hover:bg-yellow-600 text-white"
-    },
-    {
-      id: 2,
-      title: t.donation.student,
-      description: t.donation.studentDesc,
-      icon: <GraduationCap size={32} />,
-      color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400",
-      buttonColor: "bg-emerald-600 hover:bg-emerald-700"
-    },
-    {
-      id: 3,
-      title: t.donation.circle,
-      description: t.donation.circleDesc,
-      icon: <Users size={32} />,
-      // Using site palette: Accent (#dabc81) and Secondary (#c2902d)
-      color: "bg-accent/20 text-secondary dark:text-accent",
-      buttonColor: "bg-accent hover:bg-secondary text-primary hover:text-white transition-colors font-bold"
-    },
-    {
-      id: 4,
-      title: t.donation.general,
-      description: t.donation.generalDesc,
-      icon: <HandHeart size={32} />,
-      color: "bg-primary/10 text-primary dark:bg-primary/20 dark:text-teal-300",
-      buttonColor: "bg-primary hover:bg-primary/90"
+  const getIcon = (iconStr: string) => {
+    switch (iconStr) {
+      case 'student': return <GraduationCap size={32} />;
+      case 'teacher': return <UserCheck size={32} />;
+      case 'circle': return <Users size={32} />;
+      default: return <HandHeart size={32} />;
     }
-  ];
+  };
+
+  const getColor = (iconStr: string) => {
+    switch (iconStr) {
+      case 'student': return "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400";
+      case 'teacher': return "bg-secondary/10 text-secondary dark:bg-secondary/20";
+      case 'circle': return "bg-accent/20 text-secondary dark:text-accent";
+      default: return "bg-primary/10 text-primary dark:bg-primary/20 dark:text-teal-300";
+    }
+  };
+
+  const getButtonColor = (iconStr: string) => {
+    switch (iconStr) {
+      case 'student': return "bg-emerald-600 hover:bg-emerald-700 text-white";
+      case 'teacher': return "bg-secondary hover:bg-yellow-600 text-white";
+      case 'circle': return "bg-accent hover:bg-secondary text-primary hover:text-white transition-colors";
+      default: return "bg-primary hover:bg-primary/90 text-white";
+    }
+  };
 
   const ArrowIcon = () => (
      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={dir === 'rtl' ? '' : 'rotate-180'}>
@@ -61,26 +52,32 @@ const DonationOpportunities: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {opportunities.map((item) => (
+        <div className="flex flex-wrap justify-center gap-6">
+          {t.donation.packages.map((item: any, index: number) => (
             <div 
-              key={item.id} 
-              className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 flex flex-col group transform hover:-translate-y-2"
+              key={index} 
+              className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 flex flex-col group transform hover:-translate-y-2"
             >
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${item.color} transition-transform group-hover:scale-110 duration-300`}>
-                {item.icon}
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${getColor(item.icon)} transition-transform group-hover:scale-110 duration-300`}>
+                {getIcon(item.icon)}
               </div>
               
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{item.title}</h3>
-              <p className="text-gray-500 dark:text-gray-400 mb-8 leading-relaxed flex-grow text-sm">
-                {item.description}
-              </p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+              {item.desc && (
+                <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm font-medium">
+                  {item.desc}
+                </p>
+              )}
+              
+              <div className="mt-auto mb-6">
+                <span className="text-3xl font-extrabold text-primary dark:text-secondary">{item.price}</span>
+              </div>
               
               <a 
                 href={LINKS.donation} 
                 target="_blank" 
                 rel="noreferrer"
-                className={`w-full py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md ${item.buttonColor}`}
+                className={`w-full py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md ${getButtonColor(item.icon)}`}
               >
                 <span>{t.donation.donateBtn}</span>
                 <ArrowIcon />

@@ -48,7 +48,7 @@ const SmartAssistant: React.FC = () => {
   const getSystemInstruction = () => {
     // We use the localized list from 't' inside the hook
     const mosquesList = t.mosquesList.map(m => `- ${m.name} (Map: ${m.mapLink})`).join('\n');
-    const statsList = STATISTICS_DATA.map(s => `- ${s.label}: ${s.value}`).join('\n');
+    const statsList = STATISTICS_DATA.flatMap(s => s.items).map(item => `- ${item.label}: ${item.value}`).join('\n');
     
     return `
       You are the dedicated AI Assistant for "Al-Tibyan Central Complex" (مجمع التبيان المركزي).
@@ -114,7 +114,7 @@ const SmartAssistant: React.FC = () => {
     }
 
     if (q.includes('student') || q.includes('number') || q.includes('many') || q.includes('طالب') || q.includes('عدد') || q.includes('احصائيات')) {
-      const students = STATISTICS_DATA.find(s => s.key === 'students')?.value || 520;
+      const students = STATISTICS_DATA.flatMap(s => s.items).find(item => item.key === 'totalStudents')?.value || 675;
       return isAr
         ? `يضم المجمع حالياً أكثر من ${students} طالب وطالبة، ولله الحمد.`
         : `The complex currently serves over ${students} students, Al-Hamdulillah.`;

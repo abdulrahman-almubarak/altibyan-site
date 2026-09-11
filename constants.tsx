@@ -24,15 +24,73 @@ export const LINKS = {
 };
 
 export const STATISTICS_DATA = [
-  { id: 1, label: "طالباً", value: 520, key: "students" },
-  { id: 2, label: "معلماً", value: 27, key: "teachers" },
-  { id: 3, label: "معلماً مجازاً", value: 23, key: "certified" },
-  { id: 4, label: "إدارياً", value: 22, key: "admins" },
-  { id: 5, label: "مسجد", value: 10, key: "mosques" },
-  { id: 6, label: "حلقة قرآنية", value: 40, key: "circles" },
-  { id: 7, label: "خاتماً", value: 28, key: "khatmeen" },
-  { id: 8, label: "مقارئ", value: 7, key: "maqari" },
-  { id: 9, label: "طفلاً في برنامج نور البيان", value: 85, key: "noor" },
+  {
+    id: "mosques",
+    titleKey: "affiliatedMosques",
+    items: [
+      { id: 1, label: "المساجد", value: 10, key: "mosques" }
+    ]
+  },
+  {
+    id: "staff",
+    titleKey: "workingStaff",
+    items: [
+      { id: 2, label: "المشرفين", value: 10, key: "supervisors" },
+      { id: 3, label: "الاداريين", value: 12, key: "admins" },
+      { id: 4, label: "المقرئين", value: 4, key: "reciters" },
+      { id: 5, label: "المعلمين المجازين", value: 28, key: "certifiedTeachers" }
+    ]
+  },
+  {
+    id: "beneficiaries",
+    titleKey: "beneficiaryCategories",
+    items: [
+      { id: 6, label: "مجموع الطلاب", value: 675, key: "totalStudents" },
+      { id: 7, label: "الكبار", value: 23, key: "adults" },
+      { id: 8, label: "قراءات", value: 31, key: "qiraat" },
+      { id: 9, label: "الجامعيين", value: 12, key: "universityStudents" },
+      { id: 10, label: "الابتدائي", value: 102, key: "elementary" },
+      { id: 11, label: "المتوسط", value: 83, key: "intermediate" },
+      { id: 12, label: "الثانوي", value: 167, key: "highschool" }
+    ]
+  },
+  {
+    id: "circles",
+    titleKey: "circlesStats",
+    items: [
+      { id: 13, label: "الحلقات العامة", value: 17, key: "quranCircles" },
+      { id: 14, label: "تصحيح التلاوة", value: 4, key: "tilawaCorrection" },
+      { id: 15, label: "المراجعة", value: 4, key: "revision" },
+      { id: 16, label: "المقارئ", value: 7, key: "maqari" },
+      { id: 17, label: "تصحيح الفاتحة", value: 3, key: "fatihaCorrection" },
+      { id: 18, label: "تصحيح الفاتحة (للجاليات)", value: 1, key: "fatihaExpats" },
+      { id: 19, label: "نور البيان", value: 2, key: "noorAlbayanCircles" }
+    ]
+  },
+  {
+    id: "courses",
+    titleKey: "programBeneficiaries",
+    items: [
+      { id: 20, label: "التجويد", value: 185, key: "tajweed" },
+      { id: 21, label: "التلاوة", value: 103, key: "tilawa" },
+      { id: 22, label: "مصطلحات الضبط", value: 45, key: "dabt" },
+      { id: 23, label: "برنامج ختمتي", value: 10, key: "khatmati" },
+      { id: 24, label: "نور البيان", value: 55, key: "noorAlbayan" },
+      { id: 25, label: "الدورة الصيفية", value: 228, key: "summerCourse" },
+      { id: 26, label: "الدورة الرمضانية", value: 332, key: "ramadanCourse" }
+    ]
+  },
+  {
+    id: "achievements",
+    titleKey: "fruitsAndAchievements",
+    items: [
+      { id: 27, label: "الخاتمين", value: 20, key: "khatmeen" },
+      { id: 28, label: "المجازين", value: 17, key: "certified" },
+      { id: 29, label: "الاوجه المحفوظة", value: 19915, key: "memorizedPages" },
+      { id: 30, label: "اوجه المراجعة", value: 50878, key: "reviewedPages" },
+      { id: 31, label: "اوجه التلاوة", value: 10596, key: "recitedPages" }
+    ]
+  }
 ];
 
 export const CIRCLE_TYPES = [
@@ -81,12 +139,4 @@ export const CIRCLE_TYPES = [
     ageRange: 'الكل',
     iconName: 'Users'
   }
-];
-
-export const NEWS_ITEMS = [
-  "دورة التبيان الرمضانية السابعة (1447هـ): فروع متنوعة وجوائز متميزة",
-  "انطلاق التسجيل للفصل الدراسي الجديد في جميع حلقات المجمع",
-  "مشروع تصحيح تلاوة سورة الفاتحة وقصار السور (مفتوح الآن)",
-  "مشروع تصحيح التلاوة للجاليات (Urdu): انطلاق التسجيل للناطقين بغير العربية",
-  "التقرير النصفي للدورة الرمضانية السابعة لعام 1447هـ"
 ];

@@ -5,7 +5,39 @@ import { useThemeLanguage } from '../context/ThemeLanguageContext';
 
 const Advertisements: React.FC = () => {
   const { t, dir } = useThemeLanguage();
-  const ads = t.adsList;
+  const arMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+  const enMonths = ['Muharram', 'Safar', 'Rabi', 'Rabi', 'Jumada', 'Jumada', 'Rajab', "Sha'ban", 'Ramadan', 'Shawwal', 'Dhu al-Qi', 'Dhu al-Hijjah'];
+
+  const parseDateScore = (dateStr: string) => {
+    if (!dateStr || dateStr.includes('مفتوح') || dateStr.includes('Open')) return 0;
+    
+    let year = 1447;
+    let month = 0;
+    let day = 0;
+
+    const normalizedStr = dateStr.replace(/[\u0660-\u0669]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x0660 + 48));
+
+    const yearMatch = normalizedStr.match(/14\d\d/);
+    if (yearMatch) {
+      year = parseInt(yearMatch[0], 10);
+    }
+
+    const dayMatch = normalizedStr.match(/\d+/);
+    if (dayMatch && parseInt(dayMatch[0], 10) < 100) {
+      day = parseInt(dayMatch[0], 10);
+    }
+
+    for (let i = 0; i < arMonths.length; i++) {
+      if (dateStr.includes(arMonths[i]) || dateStr.toLowerCase().includes(enMonths[i].toLowerCase())) {
+        month = i + 1;
+        break;
+      }
+    }
+
+    return year * 10000 + month * 100 + day;
+  };
+
+  const ads = [...t.adsList].sort((a, b) => parseDateScore(b.date) - parseDateScore(a.date));
   const [selectedAd, setSelectedAd] = useState<AdItem | null>(null);
 
   const renderItemWithLinks = (text: string) => {
@@ -84,13 +116,13 @@ const Advertisements: React.FC = () => {
           {ads.map((ad) => (
             <div 
               key={ad.id} 
-              className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm hover:shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden group transition-all duration-300 flex flex-col"
+              className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-sm hover:shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden group transition-all duration-300 flex flex-col"
             >
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-2">
                 <img 
                   src={ad.image} 
                   alt={ad.title} 
-                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 rounded-2xl"
                 />
                 <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-primary dark:text-secondary flex items-center gap-1.5 shadow-sm">
                    <Calendar size={14} />
@@ -115,118 +147,117 @@ const Advertisements: React.FC = () => {
                   </button>
                 </div>
               </div>
+
+              {/* In-Card Overlay Details */}
+              <div 
+                className={`absolute inset-0 z-50 bg-white dark:bg-gray-900 flex flex-col transition-transform duration-300 ease-in-out ${
+                  selectedAd?.id === ad.id ? 'translate-y-0' : 'translate-y-full'
+                }`}
+              >
+                {selectedAd?.id === ad.id && (
+                  <>
+                    <div className="sticky top-0 z-10 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between shadow-sm">
+                      <h3 className="font-bold text-primary dark:text-secondary truncate pr-4">{ad.title}</h3>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedAd(null);
+                        }}
+                        className="p-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300 transition-colors shrink-0"
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+
+                    <div className="overflow-y-auto flex-1 p-6">
+                      <div className="w-full bg-gray-100 dark:bg-black/20 flex items-center justify-center p-4 rounded-xl mb-6">
+                        <img 
+                          src={ad.image} 
+                          alt={ad.title} 
+                          className="max-w-full max-h-[40vh] object-contain rounded-lg shadow-sm" 
+                        />
+                      </div>
+
+                      <div className="mb-6 flex items-center justify-between">
+                         <span className="text-xs font-bold text-secondary uppercase tracking-wider bg-secondary/10 px-2 py-1 rounded">{t.common.siteName}</span>
+                          <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 font-bold text-sm">
+                             <Calendar size={16} />
+                             <span>{ad.date}</span>
+                         </div>
+                      </div>
+
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-8 text-base">
+                        {ad.description}
+                      </p>
+
+                      {ad.details && (
+                        <div className="grid grid-cols-1 gap-6 mb-8">
+                          {ad.details.sections.map((section, sIdx) => (
+                            <div key={sIdx}>
+                              <h4 className="font-bold text-primary dark:text-secondary border-b border-gray-100 dark:border-gray-700 pb-2 mb-3 flex items-center gap-2 text-sm">
+                                <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+                                {section.title}
+                              </h4>
+                              <ul className="space-y-2">
+                                {section.items.map((item, iIdx) => (
+                                  <li key={iIdx} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                    <CheckCircle2 size={14} className="text-green-500 shrink-0 mt-1" />
+                                    <span className="flex-1 leading-relaxed">
+                                       {renderItemWithLinks(item)}
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="mt-4 flex flex-col gap-3 pb-4">
+                        {ad.buttons ? (
+                          ad.buttons.map((btn, idx) => (
+                            <a 
+                              key={idx}
+                              href={btn.link}
+                              target="_blank" 
+                              rel="noreferrer"
+                              onClick={() => setSelectedAd(null)}
+                              className={`w-full py-3.5 text-white text-center rounded-xl font-bold transition-colors text-sm ${idx === 0 ? 'bg-secondary hover:bg-yellow-600' : 'bg-primary hover:bg-primary/90'}`}
+                            >
+                              {btn.text}
+                            </a>
+                          ))
+                        ) : (
+                          ad.link && (
+                            <a 
+                              href={ad.link}
+                              target="_blank" 
+                              rel="noreferrer"
+                              onClick={() => setSelectedAd(null)}
+                              className="w-full py-3.5 bg-primary text-white text-center rounded-xl font-bold hover:bg-primary/90 transition-colors text-sm"
+                            >
+                              {t.hero.register}
+                            </a>
+                          )
+                        )}
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedAd(null);
+                          }}
+                          className="w-full py-3.5 bg-gray-100 dark:bg-gray-800 rounded-xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm"
+                        >
+                          {t.common.close}
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Ad Details Modal */}
-      {selectedAd && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-sm transition-all">
-          <div className="absolute inset-0" onClick={() => setSelectedAd(null)}></div>
-          
-          <div className="relative bg-white dark:bg-gray-900 w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-10 duration-300 flex flex-col max-h-[90vh]">
-            {/* Close Button */}
-            <button 
-              onClick={() => setSelectedAd(null)}
-              className="absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
-            >
-              <X size={24} />
-            </button>
-
-            {/* Scrollable Area */}
-            <div className="overflow-y-auto flex-1">
-                {/* Full Image Section */}
-                <div className="w-full bg-gray-100 dark:bg-black/20">
-                  <img 
-                    src={selectedAd.image} 
-                    alt={selectedAd.title} 
-                    className="w-full h-auto object-contain mx-auto" 
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-6 sm:p-8">
-                  {/* Header Info */}
-                  <div className="mb-6 border-b border-gray-100 dark:border-gray-800 pb-6">
-                       <div className="flex items-center justify-between mb-3">
-                           <span className="text-xs font-bold text-secondary uppercase tracking-wider bg-secondary/10 px-2 py-1 rounded">{t.common.siteName}</span>
-                            <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 font-bold text-sm">
-                               <Calendar size={16} />
-                               <span>{selectedAd.date}</span>
-                           </div>
-                       </div>
-                       <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
-                         {selectedAd.title}
-                       </h3>
-                  </div>
-
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-8 text-lg">
-                    {selectedAd.description}
-                  </p>
-
-                  {selectedAd.details && (
-                    <div className="grid grid-cols-1 gap-8 mb-8">
-                      {selectedAd.details.sections.map((section, sIdx) => (
-                        <div key={sIdx}>
-                          <h4 className="font-bold text-primary dark:text-secondary border-b border-gray-100 dark:border-gray-700 pb-2 mb-4 flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-secondary"></div>
-                            {section.title}
-                          </h4>
-                          <ul className="space-y-3">
-                            {section.items.map((item, iIdx) => (
-                              <li key={iIdx} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
-                                <CheckCircle2 size={16} className="text-green-500 shrink-0 mt-0.5" />
-                                <span className="flex-1 leading-relaxed">
-                                   {renderItemWithLinks(item)}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="mt-4 flex flex-col sm:flex-row gap-4">
-                    <button 
-                      onClick={() => setSelectedAd(null)}
-                      className="flex-1 py-4 bg-gray-100 dark:bg-gray-800 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      {t.common.close}
-                    </button>
-                    {selectedAd.buttons ? (
-                      selectedAd.buttons.map((btn, idx) => (
-                        <a 
-                          key={idx}
-                          href={btn.link}
-                          target="_blank" 
-                          rel="noreferrer"
-                          onClick={() => setSelectedAd(null)}
-                          className={`flex-1 py-4 text-white text-center rounded-2xl font-bold transition-colors ${idx === 0 ? 'bg-secondary hover:bg-yellow-600' : 'bg-primary hover:bg-primary/90'}`}
-                        >
-                          {btn.text}
-                        </a>
-                      ))
-                    ) : (
-                      selectedAd.link && (
-                        <a 
-                          href={selectedAd.link}
-                          target="_blank" 
-                          rel="noreferrer"
-                          onClick={() => setSelectedAd(null)}
-                          className="flex-1 py-4 bg-primary text-white text-center rounded-2xl font-bold hover:bg-primary/90 transition-colors"
-                        >
-                          {t.hero.register}
-                        </a>
-                      )
-                    )}
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
